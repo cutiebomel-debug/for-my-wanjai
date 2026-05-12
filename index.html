@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Sweetheart 💖</title>
+    <!-- นำเข้าพลุ Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #ffafbd;
+            --bg-color: #fce4ec;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 100%);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            touch-action: manipulation; /* ปรับการตอบสนองบนมือถือ */
+        }
+
+        /* เอฟเฟกต์หัวใจลอยหลังพื้นหลัง */
+        .heart-bg {
+            position: absolute;
+            top: -10%;
+            color: rgba(255, 77, 109, 0.2);
+            font-size: 20px;
+            animation: drift linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes drift {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* กล่องจดหมาย */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.5s;
+        }
+
+        .envelope {
+            position: relative;
+            width: 250px;
+            height: 180px;
+            background: var(--soft-pink);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* ฝาซองจดหมาย */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-left: 125px solid transparent;
+            border-right: 125px solid transparent;
+            border-top: 100px solid var(--primary-pink);
+            transform-origin: top;
+            transition: transform 0.5s 0.3s;
+        }
+
+        /* ด้านข้างและล่างของซองจดหมาย */
+        .envelope::after {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            width: 0; height: 0;
+            border-left: 125px solid white;
+            border-right: 125px solid white;
+            border-top: 90px solid transparent;
+            border-bottom: 90px solid white;
+            border-radius: 10px;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 230px;
+            height: 160px;
+            background: white;
+            text-align: center;
+            padding-top: 20px;
+            transition: 0.5s;
+            z-index: 0;
+            border-radius: 5px;
+        }
+
+        /* สถานะเมื่อเปิดซอง */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translateY(-100px);
+            z-index: 3;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* เนื้อหาในจดหมาย */
+        .content {
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .envelope-wrapper.open .content {
+            opacity: 1;
+            transition-delay: 0.5s;
+        }
+
+        h2 { color: var(--primary-pink); font-size: 1.2rem; margin-bottom: 10px; }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #yesBtn {
+            background: var(--primary-pink);
+            color: white;
+            width: 80%;
+        }
+
+        #noBtn {
+            background: #eee;
+            color: #888;
+            position: fixed; /* ใช้ fixed เพื่อให้วิ่งหนีได้ทั่วจอ */
+            z-index: 100;
+        }
+
+        .hidden { display: none; }
+
+        #successMessage {
+            text-align: center;
+            color: var(--primary-pink);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-wrapper" id="wrapper" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="letter">
+                <div class="content">
+                    <h2 id="questionText">รักเค้าไหมคะ? 💖</h2>
+                    <div class="btn-group" id="actions">
+                        <button id="yesBtn" onclick="sayYes(event)">รักที่สุด!</button>
+                        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton(event)">ไม่รัก</button>
+                    </div>
+                    <div id="successMessage">
+                        <h3>เย้! รักเธอเหมือนกันนะ 🌸✨</h3>
+                        <p>ขอบคุณที่อยู่ข้างๆ กันครับ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // สร้างหัวใจลอยๆ
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // เปิดซองจดหมาย
+        function openEnvelope() {
+            document.getElementById('wrapper').classList.add('open');
+        }
+
+        // ปุ่มวิ่งหนี
+        function moveButton(event) {
+            if (event) event.stopPropagation(); // ไม่ให้ไปทริกเกอร์การเปิดซองซ้ำ
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // เมื่อแฟนกดตกลง
+        function sayYes(event) {
+            event.stopPropagation();
+            document.getElementById('actions').classList.add('hidden');
+            document.getElementById('questionText').classList.add('hidden');
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // ยิงพลุ
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffafbd', '#ffffff']
+            });
+        }
+    </script>
+</body>
+</html>
