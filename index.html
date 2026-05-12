@@ -106,13 +106,32 @@
         .album-art {
             width: 180px;
             height: 180px;
-            background: linear-gradient(45deg, var(--p), var(--s));
             border-radius: 50%;
             margin-bottom: 20px;
-            animation: rotate 8s linear infinite;
             border: 5px solid var(--bg);
+            object-fit: cover;
+            /* การหมุน */
+            animation: rotate 8s linear infinite;
+            animation-play-state: paused; /* เริ่มต้นให้หยุดหมุน */
         }
         @keyframes rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+        .play-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .music-btn {
+            padding: 10px 25px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        #playBtn { background: var(--p); color: white; }
+        #pauseBtn { background: #eee; color: #777; }
+        .music-btn:active { transform: scale(0.9); }
 
         /* หน้า 4: ปุ่มวิ่งหนี */
         #noBtn {
@@ -155,8 +174,8 @@
 <body>
 
     <audio id="bgMusic" loop preload="auto">
-    <source src="our-song.mp3" type="audio/mpeg">
-</audio>
+        <source src="our-song.mp3" type="audio/mpeg">
+    </audio>
 
     <nav id="mainNav">
         <span onclick="show('home')">🏠</span>
@@ -185,9 +204,13 @@
 
     <div id="music" class="section">
         <div class="music-card">
-            <div class="album-art"></div>
+            <!-- โบเปลี่ยน src="pic1.jpg" เป็นรูปที่โบอยากให้หมุนได้เลยครับ -->
+            <img id="discImage" class="album-art" src="pic1.jpg" alt="Music Disc">
             <h3 style="color: var(--p);">Our Playlist 🎶</h3>
-            <button onclick="toggleMusic()" id="playBtn" style="padding:10px 20px; border-radius:20px; border:none; background:var(--p); color:white;">Play / Pause</button>
+            <div class="play-controls">
+                <button onclick="playMusic()" id="playBtn" class="music-btn">PLAY</button>
+                <button onclick="pauseMusic()" id="pauseBtn" class="music-btn">STOP</button>
+            </div>
         </div>
     </div>
 
@@ -220,9 +243,7 @@
 
         // 2. ระบบเปิดซองจดหมาย
         function openEnvelope() {
-            // สั่งให้เพลงเล่นทันทีที่จิ้มเปิดซอง
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("ต้องการการจิ้มหน้าจอก่อนเพลงถึงจะเล่นได้"));
+            playMusic(); // ให้เพลงเล่นทันทีเมื่อเปิดจดหมาย
 
             document.getElementById('env').classList.add('open');
             document.getElementById('status').innerText = "ยินดีต้อนรับคับเบบี๋!";
@@ -250,11 +271,18 @@
         noBtn.addEventListener('mouseover', moveNoBtn);
         noBtn.addEventListener('touchstart', moveNoBtn);
 
-        // 5. ระบบเพลง
-        function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            if (audio.paused) audio.play();
-            else audio.pause();
+        // 5. ระบบเพลงแบบปุ่มแยก
+        const audio = document.getElementById('bgMusic');
+        const disc = document.getElementById('discImage');
+
+        function playMusic() {
+            audio.play();
+            disc.style.animationPlayState = 'running'; // ให้รูปหมุน
+        }
+
+        function pauseMusic() {
+            audio.pause();
+            disc.style.animationPlayState = 'paused'; // ให้รูปหยุดหมุน
         }
 
         // 6. ระบบฉลอง
