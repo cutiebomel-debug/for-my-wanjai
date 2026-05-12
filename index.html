@@ -31,7 +31,7 @@
             backdrop-filter: blur(10px);
             padding: 10px 25px;
             border-radius: 30px;
-            display: none; /* จะแสดงเมื่อเปิดจดหมายแล้ว */
+            display: none; 
             gap: 25px;
             z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
@@ -40,7 +40,6 @@
         nav span { cursor: pointer; font-size: 24px; transition: 0.3s; }
         nav span:hover { transform: scale(1.2); }
 
-        /* การจัดการแต่ละหน้า */
         .section {
             display: none;
             height: 100vh;
@@ -140,7 +139,6 @@
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
 
-        /* หัวใจลอยหลังพื้นหลัง */
         .floating-heart {
             position: absolute;
             color: rgba(255, 77, 109, 0.15);
@@ -156,12 +154,11 @@
 </head>
 <body>
 
-   <audio id="bgMusic" loop>
-    <!-- ถ้าคุณโบตั้งชื่อไฟล์ว่า our-song.mp3 ก็ใส่ชื่อตามนี้เลยครับ -->
-    <source src="our song.mp3" type="audio/mpeg">
-</audio>
+    <audio id="bgMusic" loop>
+        <!-- แนะนำให้คุณโบแก้ชื่อไฟล์ใน GitHub ให้เป็น our-song.mp3 (ไม่มีเว้นวรรค) นะครับ -->
+        <source src="our-song.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- เมนูนำทาง -->
     <nav id="mainNav">
         <span onclick="show('home')">🏠</span>
         <span onclick="show('gallery')">🖼️</span>
@@ -169,7 +166,6 @@
         <span onclick="show('ask')">❓</span>
     </nav>
 
-    <!-- Section 1: Home (Envelope) -->
     <div id="home" class="section active">
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope" id="env"></div>
@@ -177,11 +173,9 @@
         <h2 style="margin-top: 40px; color: var(--p);" id="status">จิ้มเปิดจดหมายเร็วอ้วนนนนนน</h2>
     </div>
 
-    <!-- Section 2: Gallery -->
     <div id="gallery" class="section">
         <h2 style="color: var(--p);">Our Memories 📸</h2>
         <div class="grid">
-            <!-- คุณโบเปลี่ยนชื่อไฟล์รูปตรง src="..." ได้เลยครับ -->
             <img class="photo" src="pic1.jpg" alt="รูปคู่ 1">
             <img class="photo" src="pic2.jpg" alt="รูปคู่ 2">
             <img class="photo" src="pic3.jpg" alt="รูปคู่ 3">
@@ -190,7 +184,6 @@
         <p style="font-size: 0.9rem; color: #888;">(ร้ากกกเบบี๋)</p>
     </div>
 
-    <!-- Section 3: Music -->
     <div id="music" class="section">
         <div class="music-card">
             <div class="album-art"></div>
@@ -199,7 +192,6 @@
         </div>
     </div>
 
-    <!-- Section 4: Ask (Runaway Button) -->
     <div id="ask" class="section">
         <h2 id="questionHeader" style="color: var(--p); font-size: 2rem;">รักโบมั้ย? 💖</h2>
         <div id="btnArea" style="margin-top: 30px;">
@@ -208,7 +200,7 @@
         </div>
         <div id="finalMsg" style="display:none;">
             <h1 style="color: var(--p);">เย้! รักเบบี๋เหมือนกันนะ 🌸✨</h1>
-            <p>ขอบคุณที่เป็นความสุขให้กันเสมอมา เค้ารักเบบี๋มากกกกกอยู่กับเค้าไปนานแส๊นนานเลยน้าา
+            <p>ขอบคุณที่เป็นความสุขให้กันเสมอมา เค้ารักเบบี๋มากกกกกอยู่กับเค้าไปนานแส๊นนานเลยน้าา<br>
             แล้วก็ขอให้เบบี๋ไม่เจ็บไม่ป่วยขอให้เบบี๋ปลอดภัยทู๊กที่ที่ไปเยยย ขอให้เบบี๋รวยเค้าจะเกาะเบบี๋กินอิอิ</p>
         </div>
     </div>
@@ -229,6 +221,10 @@
 
         // 2. ระบบเปิดซองจดหมาย
         function openEnvelope() {
+            // สั่งให้เพลงเล่นทันทีที่จิ้มเปิดซอง
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(e => console.log("ต้องการการจิ้มหน้าจอก่อนเพลงถึงจะเล่นได้"));
+
             document.getElementById('env').classList.add('open');
             document.getElementById('status').innerText = "ยินดีต้อนรับคับเบบี๋!";
             setTimeout(() => {
@@ -243,7 +239,7 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // 4. ระบบปุ่มวิ่งหนี (แม่นยำขึ้นสำหรับมือถือ)
+        // 4. ระบบปุ่มวิ่งหนี
         const noBtn = document.getElementById('noBtn');
         function moveNoBtn(e) {
             if(e) e.preventDefault();
