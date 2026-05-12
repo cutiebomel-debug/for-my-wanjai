@@ -154,10 +154,9 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <!-- แนะนำให้คุณโบแก้ชื่อไฟล์ใน GitHub ให้เป็น our-song.mp3 (ไม่มีเว้นวรรค) นะครับ -->
-        <source src="our-song.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop preload="auto">
+    <source src="our-song.mp3" type="audio/mpeg">
+</audio>
 
     <nav id="mainNav">
         <span onclick="show('home')">🏠</span>
