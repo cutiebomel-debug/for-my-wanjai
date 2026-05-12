@@ -156,10 +156,10 @@
 </head>
 <body>
 
-    <!-- เพลงประกอบ -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+   <audio id="bgMusic" loop>
+    <!-- ถ้าคุณโบตั้งชื่อไฟล์ว่า our-song.mp3 ก็ใส่ชื่อตามนี้เลยครับ -->
+    <source src="(44) รู้ไหมคุณ - YouTube - Brave 2026-05-13 00-54-30.mp3" type="audio/mpeg">
+</audio>
 
     <!-- เมนูนำทาง -->
     <nav id="mainNav">
@@ -174,7 +174,7 @@
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope" id="env"></div>
         </div>
-        <h2 style="margin-top: 40px; color: var(--p);" id="status">จิ้มเปิดจดหมายหน่อยนะ...</h2>
+        <h2 style="margin-top: 40px; color: var(--p);" id="status">จิ้มเปิดจดหมายเร็วอ้วนนนนนน</h2>
     </div>
 
     <!-- Section 2: Gallery -->
@@ -182,12 +182,12 @@
         <h2 style="color: var(--p);">Our Memories 📸</h2>
         <div class="grid">
             <!-- คุณโบเปลี่ยนชื่อไฟล์รูปตรง src="..." ได้เลยครับ -->
-            <img class="photo" src="pic1.JPG" alt="รูปคู่ 1">
-            <img class="photo" src="pic2.JPG" alt="รูปคู่ 2">
-            <img class="photo" src="pic3.JPG" alt="รูปคู่ 3">
-            <img class="photo" src="pic4.JPG" alt="รูปคู่ 4">
+            <img class="photo" src="pic1.jpg" alt="รูปคู่ 1">
+            <img class="photo" src="pic2.jpg" alt="รูปคู่ 2">
+            <img class="photo" src="pic3.jpg" alt="รูปคู่ 3">
+            <img class="photo" src="pic4.jpg" alt="รูปคู่ 4">
         </div>
-        <p style="font-size: 0.9rem; color: #888;">(อัปโหลดไฟล์รูปขึ้น GitHub ในชื่อเดียวกันนะ)</p>
+        <p style="font-size: 0.9rem; color: #888;">(ร้ากกกเบบี๋)</p>
     </div>
 
     <!-- Section 3: Music -->
@@ -201,14 +201,15 @@
 
     <!-- Section 4: Ask (Runaway Button) -->
     <div id="ask" class="section">
-        <h2 id="questionHeader" style="color: var(--p); font-size: 2rem;">รักเค้าไหม? 💖</h2>
+        <h2 id="questionHeader" style="color: var(--p); font-size: 2rem;">รักโบมั้ย? 💖</h2>
         <div id="btnArea" style="margin-top: 30px;">
             <button id="yesBtn" onclick="celebrate()">รักที่สุด!</button>
             <button id="noBtn">ไม่รัก</button>
         </div>
         <div id="finalMsg" style="display:none;">
-            <h1 style="color: var(--p);">เย้! รักเธอเหมือนกันนะ 🌸✨</h1>
-            <p>ขอบคุณที่เป็นความสุขให้กันเสมอมา</p>
+            <h1 style="color: var(--p);">เย้! รักเบบี๋เหมือนกันนะ 🌸✨</h1>
+            <p>ขอบคุณที่เป็นความสุขให้กันเสมอมา เค้ารักเบบี๋มากกกกกอยู่กับเค้าไปนานแส๊นนานเลยน้าา
+            แล้วก็ขอให้เบบี๋ไม่เจ็บไม่ป่วยขอให้เบบี๋ปลอดภัยทู๊กที่ที่ไปเยยย ขอให้เบบี๋รวยเค้าจะเกาะเบบี๋กินอิอิ</p>
         </div>
     </div>
 
@@ -229,7 +230,7 @@
         // 2. ระบบเปิดซองจดหมาย
         function openEnvelope() {
             document.getElementById('env').classList.add('open');
-            document.getElementById('status').innerText = "ยินดีต้อนรับนะหวานใจ!";
+            document.getElementById('status').innerText = "ยินดีต้อนรับคับเบบี๋!";
             setTimeout(() => {
                 document.getElementById('mainNav').style.display = 'flex';
                 show('gallery');
